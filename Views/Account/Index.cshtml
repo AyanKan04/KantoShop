@@ -1,0 +1,82 @@
+﻿@model KantoShop.Models.Account
+
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xin chào, @Model.FullName</h2>
+
+<h4>Thông tin tài khoản</h4>
+
+@using (Html.BeginForm("Index", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.FullName)
+        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FullName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PhoneNumber)
+        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @type = "tel" })
+        @Html.ValidationMessageFor(m => m.PhoneNumber)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Address)
+        @Html.TextAreaFor(m => m.Address, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Address)
+    </div>
+
+    <div class="form-group">
+        <label for="Avatar">Ảnh đại diện</label>
+        <input type="file" name="Avatar" id="Avatar" />
+        <p>Ảnh đại diện hiện tại: <img src="@Url.Content(Model.Avatar)" alt="Avatar" style="width:100px; height:auto;" /></p>
+    </div>
+
+    <div class="form-group">
+        <label for="BackgroundImage">Ảnh nền</label>
+        <input type="file" name="BackgroundImage" id="BackgroundImage" />
+        <p>Ảnh nền hiện tại: <img src="@Url.Content(Model.BackgroundImage)" alt="Background Image" style="width:100px; height:auto;" /></p>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cập nhật thông tin</button>
+}
+
+<h4>Thông tin khác</h4>
+
+<ul>
+    <li>Email: @Model.Email</li>
+    <li>Số điện thoại: @Model.PhoneNumber</li>
+    <li>Địa chỉ: @Model.Address</li>
+</ul>
+
+<h4>Quản lý đơn hàng</h4>
+
+<ul>
+    <li><a href="@Url.Action("OrderHistory", "Orders")">Xem đơn hàng</a></li>
+</ul>
+
+<hr />
+
+<h4>Ảnh đại diện & Ảnh nền</h4>
+<div>
+    <p>Ảnh đại diện: <img src="@Url.Content(Model.Avatar)" alt="Avatar" style="width:100px; height:auto;" /></p>
+    <p>Ảnh nền: <img src="@Url.Content(Model.BackgroundImage)" alt="Background Image" style="width:100px; height:auto;" /></p>
+</div>
+
+<hr />
+
+<ul>
+    <li><a href="@Url.Action("ProductList", "Products")">Danh sách sản phẩm</a></li>
+    <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+</ul>

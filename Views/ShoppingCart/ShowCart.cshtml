@@ -1,0 +1,122 @@
+﻿@model KantoShop.Models.Cart
+
+@{
+    ViewBag.Title = "ShowCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="~/Content/css/ProductList.css" rel="stylesheet" />
+<link href="~/Content/css/About.css" rel="stylesheet" />
+<link href="~/Content/css/Cart.css" rel="stylesheet" />
+
+<section id="page-header" class="about-header">
+
+    <h2>#Cart</h2>
+    <p>Thêm mã giảm giá của bạn và tiết kiệm tới 70%</p>
+
+</section>
+
+
+@if (Model != null && Model.Items.Any())
+{
+
+
+    <section id="cart" class="section-p1">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <td>Xóa</td>
+                    <td>Hình ảnh</td>
+                    <td>Sản phẩm</td>
+                    <td>Giá</td>
+                    <td>Số lượng</td>
+                    <td>Thành tiền</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    decimal total = item._quantity * item._product.Price;
+                    <tr>
+                        <td>
+                            <a href="javascript:void(0);" onclick="removeFromCart(@item._product.ProductID)">
+                                <i class="fa-regular fa-circle-xmark"></i>
+                            </a>
+                        </td>
+                        <td><img src="~/Content/images/@item._product.ImageUrl" alt="@item._product.ProductName" /></td>
+                        <td>@Html.DisplayFor(model => item._product.ProductName)</td>
+                        <td width="100" align="right">@item._product.Price.ToString("#,##0").Replace(',', '.')</td>
+                        <td>
+                            @using (Html.BeginForm("Update_Cart_Quantity", "ShoppingCart"))
+                            {
+                                <input type="hidden" name="idPro" value="@item._product.ProductID" />
+                                <input type="number" name="carQuantity" value="@item._quantity" min="1" max="@item._product.QuantityInStock" class="quantity-input" />
+                                <button type="submit" class="normal">Cập nhật</button>
+                            }
+                        </td>
+                        <td>@total.ToString("#,##0").Replace(',', '.')</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </section>
+
+
+
+    <section id="cart-add" class="section-p1">
+        <div id="coupon">
+            <h3>Áp dụng Coupon</h3>
+            <div>
+                <input type="text" placeholder="Nhập mã Coupon của bạn tại đây" />
+                <button class="normal">Áp dụng</button>
+            </div>
+        </div>
+
+        <div id="subtotal">
+            <h3>Tổng thanh toán</h3>
+            <table>
+                <tr>
+                    <td>Tổng tiền</td>
+                    <td>@Model.GetTotalMoney().ToString("#,##0").Replace(',', '.')</td>
+                </tr>
+                <tr>
+                    <td>Giao hàng</td>
+                    <td>Miễn phí</td>
+                </tr>
+                <tr>
+                    <td><strong>Thành tiền</strong></td>
+                    <td><strong>@Model.GetTotalMoney().ToString("#,##0").Replace(',', '.')</strong></td>
+                </tr>
+            </table>
+            <button href="@Url.Action("CheckOut", "ShoppingCart")" class="normal">Tiến hành thanh toán</button>
+           
+        </div>
+    </section>
+}
+else
+{
+    <h4 style="margin-top: 40px;">Giỏ hàng rỗng! Xin mời tiếp tục mua hàng.</h4>
+}
+
+
+<script>
+    function removeFromCart(productId) {
+    // Tạo một form ẩn để gửi yêu cầu POST
+    var form = document.createElement("form");
+    form.method = "POST";
+    form.action = '@Url.Action("RemoveCart", "ShoppingCart")'; // Đảm bảo đường dẫn tới action chính xác
+
+    // Thêm một input hidden chứa productId
+    var input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "id";  // Đảm bảo rằng tên input trùng với tham số trong controller
+    input.value = productId;
+    form.appendChild(input);
+
+    // Thêm form vào body và submit
+    document.body.appendChild(form);
+    form.submit();
+}
+</script>

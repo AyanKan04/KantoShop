@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0cea7a6e1a3642a5b52a072fb7551bd2" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="ShopKantoModel.Category" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopKantoModel.Customer" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopKantoModel.OrderDetail" Width="1.5" PointX="6.375" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopKantoModel.Order" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopKantoModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopKantoModel.User" Width="1.5" PointX="9" PointY="2.125" IsExpanded="true" />
+        <AssociationConnector Association="ShopKantoModel.FK__Products__Catego__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopKantoModel.FK__Orders__Customer__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopKantoModel.FK__OrderDeta__Order__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopKantoModel.FK__OrderDeta__Produ__33D4B598" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ShopKantoModel.AdminUser" Width="1.5" PointX="5.375" PointY="4.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

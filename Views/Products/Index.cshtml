@@ -1,0 +1,53 @@
+﻿@using PagedList.Mvc;
+@model IEnumerable<KantoShop.Models.Product>
+
+@{
+    ViewBag.Title = "ProductList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="~/Content/css/ProductList.css" rel="stylesheet" />
+<link href="~/Content/css/ProductIndex.css" rel="stylesheet" />
+
+<section id="page-header" class="product-header">
+    <h2>#stayhome</h2>
+    <p>tiết kiệm với khuyến mãi lên tới 70%</p>
+</section>
+
+<section id="product1" class="section-p1">
+    @if (!string.IsNullOrEmpty(Request.QueryString["SearchString"]))
+    {
+        <h2>Sản phẩm liên quan</h2>
+    }
+    else
+    {
+        <h2>Danh sách sản phẩm</h2>
+    }
+
+    @if (Model.Any())
+    {
+        <div class="pro-container">
+            @foreach (var pro in Model)
+            {
+                <div class="pro" onclick="window.location.href='/Products/Details/@pro.ProductID'">
+                    <img src="~/Content/images/@pro.ImageUrl" alt="@pro.ProductName" />
+                    <div class="des">
+                        <h5>@Html.DisplayFor(model => pro.ProductName)</h5>
+                        <h4>Đơn giá: @pro.Price.ToString("#,##0").Replace(',', '.')</h4>
+                        <a href="/Products/Details/@pro.ProductID"><i class="fa-solid fa-cart-shopping cart"></i></a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>Không có sản phẩm nào phù hợp với tìm kiếm của bạn.</p>
+    }
+</section>
+
+<section id="pagination" class="section-p1">
+    <a href="#">1</a>
+    <a href="#">2</a>
+    <a href="#"><i class="fa-solid fa-arrow-right"></i></a>
+</section>

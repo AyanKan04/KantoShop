@@ -1,0 +1,173 @@
+﻿@model KantoShop.Models.Account
+
+@{
+    ViewBag.Title = "Đăng ký";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/Login.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="~/Content/css/ProductList.css" rel="stylesheet" />
+<link href="~/Content/css/About.css" rel="stylesheet" />
+
+<style>
+    /* Định dạng chung cho trang đăng ký */
+    #register {
+        background-color: #f4f4f4;
+        padding: 40px;
+        max-width: 450px;
+        margin: 0 auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        margin-top: 50px;
+    }
+
+        #register h2 {
+            text-align: center;
+            color: #088178 !important;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            font-size: 14px;
+            color: #333 !important;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+            border-color: #ddd !important;
+        }
+
+            .form-group input:focus {
+                border-color: #088178 !important;
+                box-shadow: 0 0 5px rgba(8, 129, 120, 0.2) !important;
+            }
+
+    button.normal {
+        width: 100%;
+        padding: 15px;
+        background-color: #088178 !important;
+        color: #fff !important;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        button.normal:hover {
+            background-color: #065f51 !important;
+        }
+
+    .social-buttons {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+        .social-buttons a {
+            display: inline-block;
+            padding: 12px;
+            margin-top: 15px;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-buttons .google {
+            background-color: #db4437 !important;
+        }
+
+        .social-buttons .facebook {
+            background-color: #3b5998 !important;
+        }
+
+        .social-buttons a:hover {
+            opacity: 0.8 !important;
+        }
+
+    .footer-links {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+        .footer-links a {
+            color: #088178 !important;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+            .footer-links a:hover {
+                text-decoration: underline !important;
+            }
+
+    .field-validation-error {
+        color: red;
+    }
+</style>
+
+<section id="page-header" class="about-header">
+    <h2>#Register</h2>
+</section>
+
+<div id="register">
+    <h2>Đăng ký</h2>
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Username)
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Tên người dùng" })
+            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "field-validation-error" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.PhoneNumber)
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "Số điện thoại" })
+            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "field-validation-error" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "field-validation-error" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Mật khẩu" })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "field-validation-error" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword)
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Nhập lại mật khẩu" })
+            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "field-validation-error" })
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="normal">Đăng ký</button>
+        </div>
+
+        <div class="social-buttons">
+            <a href="#" class="google"><i class="fab fa-google"></i> Đăng ký với Google</a>
+            <a href="#" class="facebook"><i class="fab fa-facebook-f"></i> Đăng ký với Facebook</a>
+        </div>
+    }
+</div>

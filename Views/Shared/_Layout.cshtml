@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Kanto</title>
+
+    <!-- Bootstrap CSS từ CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/css/Layout.css?v=2" rel="stylesheet" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+
+    <style>
+        /* Thanh lọc sản phẩm */
+        #filter-sidebar {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky; /* Đảm bảo thanh lọc dính vào màn hình khi cuộn */
+            top: 100px; /* Khoảng cách từ đầu trang (dưới header) */
+            left: 20px; /* Khoảng cách từ lề trái */
+            z-index: 990; /* Đảm bảo thanh lọc hiển thị trên cùng */
+            width: 280px; /* Đảm bảo thanh lọc có kích thước vừa phải */
+            max-height: calc(100vh - 160px); /* Thanh lọc không vượt quá chiều cao của viewport và footer */
+            overflow-y: auto; /* Cho phép cuộn khi có nhiều filter */
+            transition: top 0.3s ease; /* Hiệu ứng mượt mà khi cuộn */
+            overflow: hidden; /* Ẩn phần tràn khi cần */
+        }
+
+        /* Tạo khoảng cách và hiển thị cho các phần trong thanh lọc */
+        #filter-sidebar h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 15px;
+        }
+
+        .filter-group {
+            margin-bottom: 20px;
+        }
+
+            .filter-group label {
+                font-size: 16px;
+                font-weight: 600;
+                color: #465b52;
+                margin-bottom: 5px;
+                display: block;
+            }
+
+            .filter-group select {
+                width: 100%;
+                padding: 12px;
+                font-size: 14px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                background-color: #f9f9f9;
+                transition: border-color 0.3s;
+            }
+
+                .filter-group select:focus {
+                    border-color: #088178;
+                    outline: none;
+                }
+
+        #apply-filters {
+            background-color: #088178;
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+            #apply-filters:hover {
+                background-color: #065e5e;
+            }
+    </style>
+</head>
+
+<body cz-shortcut-listen="true">
+    <section id="header" class="sticky-top">
+        <a href="/Products/ProductList">
+            <img src="~/Content/images/logo.png" alt="Kanto Logo" width="100">
+        </a>
+
+        <div class="search-container-wrapper" id="search-container-wrapper">
+            @using (Html.BeginForm("Index", "Products", FormMethod.Get))
+            {
+                <div class="search-container">
+                    <!-- Trường nhập liệu với placeholder "Tìm kiếm..." -->
+                    <input type="text" name="SearchString" placeholder="Tìm kiếm..." class="search-input" />
+                    <!-- Biểu tượng kính lúp (sẽ được căn chỉnh bên trong thanh tìm kiếm) -->
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            }
+        </div>
+
+        <div>
+
+            <ul id="navbar">
+                <li>
+                    <a class="@((Request.Path == "/Products/ProductList") ? "active" : "")" href="/Products/ProductList">Trang chủ</a>
+                </li>
+                <li>
+                    <a class="@((Request.Path == "/Products/Index") ? "active" : "")" href="/Products/Index">Cửa hàng</a>
+                </li>
+                <li>
+                    <a class="@((Request.Path == "/ShoppingCart/ShowCart") ? "active" : "")" href="/ShoppingCart/ShowCart">Giỏ hàng</a>
+                </li>
+                <li>
+                    @if (User.Identity.IsAuthenticated || Session["Username"] != null)
+                    {<!-- Kiểm tra đăng nhập -->
+                        <a class="@((Request.Path == "/Account/Index") ? "active" : "")" href="/Account/Index">Tài khoản (@Session["Username"])</a>
+                        <span>|</span>
+                        <a href="/Account/Logout">Đăng xuất</a>
+                    }
+                    else
+                    {
+                        <a class="@((Request.Path == "/Account/Login") ? "active" : "")" href="/Account/Login">Đăng nhập</a>
+                    }
+                </li>
+                <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
+            </ul>
+        </div>
+
+
+        <div id="mobile">
+            <i id="search-icon" class="fas fa-search"></i> <!-- Biểu tượng kính lúp -->
+            <a href="/ShoppingCart/ShowCart"><i class="fa-solid fa-cart-shopping cart"></i></a>
+            <i id="bar" class="fas fa-outdent"></i>
+        </div>
+    </section>
+
+
+
+
+    <!-- Main Content Area -->
+    <!-- Thanh lọc sản phẩm -->
+    @if (Request.Path == "/Products/Index")
+    {
+    <div class="content" style=" display: flex; margin: 0;">
+        <section id="filter-sidebar" class="filter-sidebar">
+            <h3>Lọc sản phẩm</h3>
+            <form method="get" action="/Products/Index">
+                <div class="filter-group">
+                    <label for="price-range">Giá</label>
+                    <select id="price-range" name="priceRange">
+                        <option value="0" @(Request.QueryString["priceRange"] == "0" ? "selected" : "")>Tất cả</option>
+                        <option value="1" @(Request.QueryString["priceRange"] == "1" ? "selected" : "")>Dưới 100,000 VND</option>
+                        <option value="2" @(Request.QueryString["priceRange"] == "2" ? "selected" : "")>100,000 VND - 500,000 VND</option>
+                        <option value="3" @(Request.QueryString["priceRange"] == "3" ? "selected" : "")>Trên 500,000 VND</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="size">Size</label>
+                    <select id="size" name="size">
+                        <option value="0" @(Request.QueryString["size"] == "0" ? "selected" : "")>Tất cả</option>
+                        <option value="S" @(Request.QueryString["size"] == "S" ? "selected" : "")>S</option>
+                        <option value="M" @(Request.QueryString["size"] == "M" ? "selected" : "")>M</option>
+                        <option value="L" @(Request.QueryString["size"] == "L" ? "selected" : "")>L</option>
+                        <option value="XL" @(Request.QueryString["size"] == "XL" ? "selected" : "")>XL</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="product-type">Loại sản phẩm</label>
+                    <select id="product-type" name="productType">
+                        <option value="0">Tất cả</option>
+                        @foreach (var item in ViewBag.ProductTypes as SelectList)
+                        {
+                            <option value="@item.Value" @(Request.QueryString["productType"] == item.Value.ToString() ? "selected" : "")>@item.Text</option>
+                        }
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="sort-order">Sắp xếp theo giá</label>
+                    <select id="sort-order" name="sortOrder">
+                        <option value="asc" @(Request.QueryString["sortOrder"] == "asc" ? "selected" : "")>Tăng dần</option>
+                        <option value="desc" @(Request.QueryString["sortOrder"] == "desc" ? "selected" : "")>Giảm dần</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <button type="submit" id="apply-filters">Áp dụng bộ lọc</button>
+                </div>
+            </form>
+        </section>
+
+        <div class="container" style="margin: 10px; padding: 20px; flex-grow: 1;">
+            <div class="container">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    }
+    else
+    {
+    <div class="content">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </div>
+    }
+
+
+
+    </div>
+
+    <!-- Footer -->
+    <section id="newsletter">
+        <div class="newstext">
+            <h4>Đăng ký nhận bản tin</h4>
+            <p>Nhận email cập nhật về cửa hàng mới nhất và các <span>ưu đãi đặc biệt</span> của chúng tôi</p>
+        </div>
+        <div class="form">
+            <input type="text" placeholder="Nhập địa chỉ Email của bạn" />
+            <button class="normal">Đăng ký</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="col col1">
+            <img class="logo" src="~/Content/images/logo.png" alt="" />
+            <h4 style="font-weight:600;">Liên hệ</h4>
+            <p><strong>Địa chỉ: </strong> số nhà 111, đường 11, huyện Tân Phong, quận 7, TP.HCM</p>
+            <p><strong>Số điện thoại: </strong>077 12234 5678 / 0909 876 557 </p>
+            <p><strong>Thời gian làm việc: </strong>08:00 - 18:00, Thứ hai - Thứ bảy</p>
+
+            <div class="follow">
+                <h4>Theo dõi chúng tôi</h4>
+                <div class="icon">
+                    <i class="fa-brands fa-facebook"></i>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-pinterest"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col col2">
+            <h4 style="font-weight:600;">Về chúng tôi</h4>
+            <a href="/About/Index">Thông tin KantoShop</a>
+            <a href="/About/Policy/#delivery">Thông tin giao hàng</a>
+            <a href="/About/Policy/#security">Chính sách bảo mật</a>
+            <a href="/About/Policy/#term">Điều khoản và điều kiện</a>
+            <a href="/About/Contact">Liên hệ với chúng tôi</a>
+        </div>
+        <div class="col col2">
+            <h4 style="font-weight:600;">Tài khoản của tôi</h4>
+            <a href="/Account/Login/">Đăng nhập</a>
+            <a href="/ShoppingCart/ShowCart">Xem giỏ hàng</a>
+            <a href="/ShoppingCart/ShowCart">Danh sách yêu thích</a>
+            <a href="#">Theo dõi đơn hàng</a>
+            <a href="/About/Contact">Trợ giúp khách hàng</a>
+        </div>
+
+        <div class="col install">
+            <h4 style="font-weight:600;">Tải ứng dụng</h4>
+            <p>Tải về từ App Store và Google Play</p>
+            <div class="row">
+                <img src="~/Content/images/appstore.jpg" />
+                <img src="~/Content/images/chplay.jpg" />
+            </div>
+            <p>Cổng thanh toán an toàn</p>
+            <img src="~/Content/images/pay.png" />
+        </div>
+
+        <div class="copyright">
+            <p>@DateTime.Now.Year - KantoShop</p>
+        </div>
+    </footer>
+
+    <!-- Scripts cần thiết cho Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/js/layout.js"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+﻿@model  KantoShop.Models.Product
+
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="~/Content/css/ProductDetail.css" rel="stylesheet" />
+<link href="~/Content/css/ProductList.css" rel="stylesheet" />
+
+
+
+<section id="prodetails">
+    <div class="single-pro-image">
+        <img src="~/Content/images/@Model.ImageUrl" id="MainImg" style=" height: 76vh; width: 100%; object-fit: cover;"/>
+        <div class="small-img-group">
+            <div class="small-img-col">
+                <img src="~/Content/images/a2.jpg" width="100%" class="small-img" />
+            </div>
+            <div class="small-img-col">
+                <img src="~/Content/images/a3.jpg" width="100%" class="small-img" />
+            </div>
+            <div class="small-img-col">
+                <img src="~/Content/images/a6.jpg" width="100%" class="small-img" />
+            </div>
+            <div class="small-img-col">
+                <img src="~/Content/images/aq2.jpg" width="100%" class="small-img" />
+            </div>
+        </div>
+    </div>
+
+    <div class="single-pro-details">
+        <h6>Homme / Tshort</h6>
+        <h4>@Html.DisplayFor(model => Model.ProductName)</h4>
+        <h2>Đơn giá : @Model.Price.ToString("#,##0").Replace(',', '.')</h2>
+
+        <select>
+            <option>Select Size</option>
+            <option>XL</option>
+            <option>XXL</option>
+            <option>Small</option>
+            <option>Large</option>
+        </select>
+        <form action="@Url.Action("AddToCart", "ShoppingCart")" method="post">
+            <input type="hidden" name="id" value="@Model.ProductID" /> <!-- Truyền ProductID vào đây -->
+            <input type="number" name="quantity" value="1" />
+            <button type="submit" class="normal">Thêm vào giỏ hàng</button>
+        </form>
+
+        <h4>Thông tin sản phẩm</h4>
+        <span> @Html.DisplayFor(model => Model.Description)</span>
+    </div>
+
+</section>
+<section id="product1" class="section-p1">
+    <h2>Sản phẩm liên quan</h2>
+    <p>Sản phẩm siêu mới, mua ngay kéo lỡ</p>
+    <div class="pro-container">
+        @{
+            if (ViewBag.RelatedProducts != null && ViewBag.RelatedProducts.Count > 0)
+            {
+                foreach (var pro in ViewBag.RelatedProducts)
+                {
+                    <div class="pro" onclick="window.location.href='/Products/Details/@pro.ProductID'">
+                        <img src="~/Content/images/@pro.ImageUrl" />
+                        <div class="des">
+                            <h5>@pro.ProductName</h5>
+                            <h4>@pro.Price.ToString("#,##0").Replace(',', '.')</h4>
+                            @*<a class="btn btn-info" href="/Products/Details/@pro.ProductID"> Chi tiết </a>*@
+                            <a href="/Products/Details/@pro.ProductID"><i class="fa-solid fa-cart-shopping cart"></i></a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>Không có sản phẩm liên quan nào.</p>
+            }
+        }
+
+    </div>
+
+
+</section>
+
+<script>
+     var MainImg = document.getElementById("MainImg");
+    var smalling = document.getElementsByClassName("small-img");
+
+    smalling[0].onclick = function () {
+        MainImg.src = smalling[0].src;
+    }
+    smalling[1].onclick = function () {
+        MainImg.src = smalling[1].src;
+    }
+    smalling[2].onclick = function () {
+        MainImg.src = smalling[2].src;
+    }
+    smalling[3].onclick = function () {
+        MainImg.src = smalling[3].src;
+    }
+    // Optional: Update quantity when changed in the input field
+    document.getElementById("product-quantity").addEventListener("input", function () {
+        document.getElementById("product-quantity-value").value = this.value;
+    });
+</script>

@@ -1,0 +1,152 @@
+﻿
+@{
+    ViewBag.Title = "Policy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="~/Content/css/ProductList.css" rel="stylesheet" />
+<link href="~/Content/css/About.css" rel="stylesheet" />
+
+
+<style>
+    /* Định dạng chung cho trang Chính sách */
+    #policy-section {
+        margin: 50px 80px;
+    }
+
+        #policy-section h2 {
+            font-size: 32px;
+            line-height: 40px;
+            color: #222;
+            margin-bottom: 20px;
+        }
+
+    .policy-box {
+        background-color: #f4f4f4;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .policy-img {
+        width: 45%;
+        height: auto;
+        margin-right: 20px;
+    }
+
+        .policy-img img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+    .policy-content {
+        flex: 2;
+        max-width: 50%;
+    }
+
+        .policy-content h4 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #088178;
+            margin-bottom: 15px;
+        }
+
+        .policy-content p {
+            font-size: 16px;
+            color: #465b52;
+            line-height: 1.6;
+        }
+
+            .policy-content p strong {
+                color: #088178;
+            }
+
+
+
+</style>
+
+<section id="page-header" class="about-header">
+    <h2>#Policy</h2>
+    <p>Chính sách bảo mật, giao hàng và điều khoản sử dụng </p>
+</section>
+
+<section id="policy-section" class="section-p1">
+    <h2 id="delivery">Chính Sách Giao Hàng</h2>
+    <div class="policy-box">
+        <div class="policy-img">
+            <img src="~/Content/images/bi6.jpg"  alt="Chính sách giao hàng" />
+        </div>
+        <div class="policy-content">
+            <h4>Chính Sách Giao Hàng</h4>
+            <p>
+                Tại Kanto Shop, chúng tôi cam kết mang đến cho bạn trải nghiệm mua sắm tuyệt vời với dịch vụ giao hàng nhanh chóng và đáng tin cậy. Chúng tôi cung cấp các phương thức giao hàng linh hoạt và phù hợp với nhu cầu của khách hàng.
+                <br><br>
+                <strong>1. Thời gian giao hàng:</strong> Chúng tôi sẽ xử lý và giao hàng trong vòng từ 1 đến 3 ngày làm việc đối với các đơn hàng nội thành và từ 3 đến 7 ngày đối với các đơn hàng ngoại thành hoặc khu vực xa.
+                <br>
+                <strong>2. Phí giao hàng:</strong> Phí giao hàng sẽ được tính toán dựa trên địa điểm giao hàng và kích thước, trọng lượng của đơn hàng. Chúng tôi cung cấp dịch vụ giao hàng miễn phí cho các đơn hàng có giá trị từ 500.000 VNĐ trở lên.
+                <br>
+                <strong>3. Cam kết về giao hàng:</strong> Chúng tôi cam kết sẽ giao hàng đúng thời gian đã thông báo, nếu có sự chậm trễ, chúng tôi sẽ thông báo cho khách hàng kịp thời và cung cấp các giải pháp thích hợp.
+            </p>
+            <h4>Cam Kết Giao Hàng</h4>
+            <p>
+                Chúng tôi cam kết bảo vệ quyền lợi của khách hàng bằng cách cung cấp dịch vụ giao hàng an toàn và chất lượng. Mọi thông tin về giao hàng của bạn sẽ được bảo mật và theo dõi một cách chặt chẽ. Nếu có bất kỳ vấn đề gì liên quan đến giao hàng, đội ngũ chăm sóc khách hàng của Kanto Shop luôn sẵn sàng hỗ trợ bạn.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="policy-section" class="section-p1">
+    <h2 id="security">Chính Sách Bảo Mật</h2>
+    <div class="policy-box">
+        <div class="policy-img">
+            <img src="~/Content/images/Bao-mat-thong-tin.png" alt="Chính sách bảo mật"/>
+        </div>
+        <div class="policy-content">
+            <h4>Chính Sách Bảo Mật</h4>
+            <p>
+                Tại Kanto Shop, bảo mật thông tin của khách hàng là ưu tiên hàng đầu của chúng tôi. Chúng tôi cam kết sẽ bảo vệ thông tin cá nhân của bạn trong suốt quá trình mua sắm tại cửa hàng của chúng tôi.
+                <br><br>
+                <strong>1. Thu thập thông tin:</strong> Chúng tôi chỉ thu thập thông tin cá nhân cần thiết để xử lý đơn hàng và cung cấp dịch vụ tốt nhất. Các thông tin này có thể bao gồm tên, địa chỉ, số điện thoại, và địa chỉ email của bạn.
+                <br>
+                <strong>2. Sử dụng thông tin:</strong> Thông tin thu thập sẽ được sử dụng để xử lý đơn hàng, gửi thông báo giao hàng, thông báo về các chương trình khuyến mãi hoặc sự kiện mới nhất của Kanto Shop.
+                <br>
+                <strong>3. Bảo mật thông tin:</strong> Chúng tôi sử dụng các phương thức bảo mật tiên tiến để bảo vệ thông tin của bạn, bao gồm việc mã hóa dữ liệu và hạn chế quyền truy cập vào các thông tin nhạy cảm.
+                <br>
+                <strong>4. Chia sẻ thông tin:</strong> Chúng tôi cam kết không chia sẻ thông tin của bạn cho bất kỳ bên thứ ba nào, ngoại trừ trường hợp cần thiết để xử lý đơn hàng hoặc yêu cầu từ cơ quan có thẩm quyền.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="policy-section" class="section-p1">
+    <h2 id="term">Điều Khoản và Điều Kiện</h2>
+    <div class="policy-box">
+        <div class="policy-img">
+            <img src="~/Content/images/dkvdk.jpg" alt="Chính sách bảo mật" />
+        </div>
+        <div class="policy-content">
+            <h4>Điều Khoản và Điều Kiện</h4>
+            <p>
+                Khi bạn truy cập và mua sắm tại Kanto Shop, bạn đồng ý với các điều khoản và điều kiện sau:
+                <br><br>
+                <strong>1. Quyền sở hữu và sử dụng website:</strong> Tất cả các nội dung, hình ảnh, và thông tin trên website của chúng tôi đều thuộc quyền sở hữu của Kanto Shop. Bạn chỉ được phép sử dụng các tài nguyên của chúng tôi cho mục đích cá nhân và không được sao chép, sửa đổi hoặc phân phối lại mà không có sự cho phép của chúng tôi.
+                <br>
+                <strong>2. Điều khoản mua hàng:</strong> Khi đặt hàng tại Kanto Shop, bạn đồng ý thanh toán đúng số tiền và nhận sản phẩm đã đặt. Chúng tôi có quyền từ chối hoặc hủy bỏ đơn hàng trong trường hợp thông tin không chính xác hoặc có nghi ngờ về tính hợp lệ của đơn hàng.
+                <br>
+                <strong>3. Chính sách hoàn trả:</strong> Nếu sản phẩm bạn nhận không đúng với mô tả hoặc bị lỗi, bạn có thể yêu cầu hoàn trả trong vòng 7 ngày kể từ khi nhận hàng. Sản phẩm phải còn nguyên tem mác và chưa qua sử dụng.
+                <br>
+                <strong>4. Quyền lợi của khách hàng:</strong> Khách hàng có quyền yêu cầu thông tin về các sản phẩm, dịch vụ và các chương trình khuyến mãi hiện hành. Chúng tôi sẽ cung cấp thông tin kịp thời và chính xác nhất để đảm bảo sự hài lòng của khách hàng.
+                <br>
+                <strong>5. Sửa đổi điều khoản:</strong> Chúng tôi có quyền sửa đổi, thay đổi hoặc cập nhật các điều khoản và điều kiện này mà không cần thông báo trước. Bạn cần kiểm tra lại các điều khoản này định kỳ để nắm bắt những thay đổi mới nhất.
+            </p>
+        </div>
+    </div>
+</section>

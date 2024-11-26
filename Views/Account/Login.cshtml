@@ -1,0 +1,171 @@
+﻿@model KantoShop.Models.Account
+
+@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="~/Content/css/ProductList.css" rel="stylesheet" />
+<link href="~/Content/css/Login.css" rel="stylesheet" />
+<link href="~/Content/css/About.css" rel="stylesheet" />
+<style>
+    /* Định dạng chung cho trang đăng nhập */
+/* Định dạng chung cho cả trang đăng ký và đăng nhập */
+#register {
+    background-color: #f4f4f4;
+    padding: 40px;
+    max-width: 450px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    margin-top: 50px;
+}
+
+#register h2 {
+    text-align: center;
+    color: #088178 !important;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Định dạng các form */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #333 !important;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+    /* Thêm !important để tránh bị ghi đè */
+    border-color: #ddd !important;
+}
+
+.form-group input:focus {
+    border-color: #088178 !important;
+    box-shadow: 0 0 5px rgba(8, 129, 120, 0.2) !important;
+}
+
+/* Nút đăng nhập / đăng ký */
+button.normal {
+    width: 100%;
+    padding: 15px;
+    background-color: #088178 !important;
+    color: #fff !important;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    /* Thêm !important để tránh bị ghi đè */
+}
+
+button.normal:hover {
+    background-color: #065f51 !important;
+}
+
+/* Các nút đăng nhập qua mạng xã hội */
+.social-buttons {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.social-buttons a {
+    display: inline-block;
+    padding: 12px;
+    margin-top: 15px;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+    /* Thêm !important để tránh bị ghi đè */
+}
+
+.social-buttons .google {
+    background-color: #db4437 !important;
+}
+
+.social-buttons .facebook {
+    background-color: #3b5998 !important;
+}
+
+.social-buttons a:hover {
+    opacity: 0.8 !important;
+}
+
+/* Liên kết footer */
+.footer-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer-links a {
+    color: #088178 !important;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline !important;
+}
+
+
+</style>
+<section id="page-header" class="about-header">
+    <h2>#Login</h2>
+</section>
+
+<div id="register">
+    <h2>Đăng nhập</h2>
+
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <!-- Tên đăng nhập -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.Username)
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Tên đăng nhập" })
+            @Html.ValidationMessageFor(m => m.Username)
+        </div>
+
+        <!-- Mật khẩu -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Mật khẩu" })
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+
+        <!-- Nút đăng nhập -->
+        <div class="form-group">
+            <button type="submit" class="normal">Đăng nhập</button>
+        </div>
+
+        <!-- Các nút đăng nhập qua mạng xã hội -->
+        <div class="social-buttons">
+            <a href="#" class="google"><i class="fab fa-google"></i> Đăng nhập với Google</a>
+            <a href="#" class="facebook"><i class="fab fa-facebook-f"></i> Đăng nhập với Facebook</a>
+        </div>
+
+        <!-- Footer Links -->
+        <div class="footer-links">
+            <a href="#">Quên mật khẩu?</a>
+            <p>Bạn chưa có tài khoản? <a href="/Account/Register">Đăng ký</a></p>
+        </div>
+    }
+</div>

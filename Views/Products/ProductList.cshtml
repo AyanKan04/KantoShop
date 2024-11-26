@@ -1,0 +1,123 @@
+﻿@model  IEnumerable<KantoShop.Models.Product>
+
+@{
+    ViewBag.Title = "ProductList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="~/Content/css/ProductList.css" rel="stylesheet" />
+
+<!-- Hero Section (Carousel) -->
+<section id="hero">
+    <h4>Giao hàng nhanh chống</h4>
+    <h2>Siêu Sale giá khủng</h2>
+    <h1>Tất cả mọi mặt hàng</h1>
+    <p>tiết kiệm với khuyến mãi lên tới 70%</p>
+    <button>Mua ngay</button>
+</section>
+<section id="feature" class="section-p1">
+    <div class="fe-box">
+        <img src="~/Content/images/f1.png" />
+        <h6>Miễn phí giao hàng</h6>
+    </div>
+    <div class="fe-box">
+        <img src="~/Content/images/f2.png" />
+        <h6>Đặt hàng Online</h6>
+    </div>
+    <div class="fe-box">
+        <img src="~/Content/images/f3.png" />
+        <h6>Siêu tiết kiệm</h6>
+    </div>
+    <div class="fe-box">
+        <img src="~/Content/images/f4.png" />
+        <h6>Siêu khuyến mãi</h6>
+    </div>
+    <div class="fe-box">
+        <img src="~/Content/images/f5.png" />
+        <h6>Mua bán vui vẻ</h6>
+    </div>
+    <div class="fe-box">
+        <img src="~/Content/images/f6.png" />
+        <h6>Hỗ trợ 24/7</h6>
+    </div>
+</section>
+
+<section id="product1" class="section-p1">
+    <h2>Sản phẩm nổi bật</h2>
+    <p>Sản phẩm nổi bật cập bến, mua ngay quà về trong tay</p>
+    <div class="pro-container">
+        @foreach (var pro in Model)
+        {
+            <div class="pro" onclick="window.location.href='/Products/Details/@pro.ProductID'">
+                <img src="~/Content/images/@pro.ImageUrl" />
+                <div class="des">
+                    <h5>@Html.DisplayFor(model => pro.ProductName)</h5>
+                    <h4>Đơn giá : @pro.Price.ToString("#,##0").Replace(',', '.')</h4>
+                    @*<a class="btn btn-info" href="/Products/Details/@pro.ProductID"> Chi tiết </a>*@
+                    <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
+                </div>
+            </div>
+        }
+    </div>
+
+</section>
+
+<section id="banner">
+    <h4>
+        Chương trình khuyến mãi
+    </h4>
+    <h2>
+        giảm giá lên đến <span>70%</span> - tất cả Áo phông & Phụ kiện
+    </h2>
+    <button class="normal">Xem thêm</button>
+</section>
+
+<section id="product1" class="section-p1">
+    <h2>Sản phẩm mới về</h2>
+    <p>Sản phẩm siêu cấp mới cập bến, mua ngay giá tốt bâng quà liền tay</p>
+    <div class="pro-container">
+        @foreach (var pro in Model)
+        {
+            <div class="pro" onclick="window.location.href='/Products/Details/@pro.ProductID'">
+                <img src="~/Content/images/@pro.ImageUrl" />
+                <div class="des">
+                    <h5>@Html.DisplayFor(model => pro.ProductName)</h5>
+                    <h4>Đơn giá : @Html.DisplayFor(model => pro.Price)</h4>
+                    @*<a class="btn btn-info" href="/Products/Details/@pro.ProductID"> Chi tiết </a>*@
+                    <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
+                </div>
+            </div>
+        }
+    </div>
+
+</section>
+
+<section id="sm-banner" class="section-p1">
+    <div class="banner-box">
+        <h4>Sale siêu khủng</h4>
+        <h2>Mua 1 tặng 1</h2>
+        <span>Trang phục tốt nhất chỉ có Sale tại Kanto</span>
+        <button class="white">Xem thêm</button>
+    </div>
+    <div class="banner-box banner-box2">
+        <h4>Đông/Xuân</h4>
+        <h2>Chuẩn bị cập nhật sản phẩm mới</h2>
+        <span>Trang phục tốt nhất chỉ có Sale tại Kanto</span>
+        <button class="white">Xem thêm</button>
+    </div>
+
+</section>
+<section id="banner3">
+    <div class="banner-box">
+        <h2>THỜI TRANG THEO MÙA</h2>
+        <h3>Bộ sưu tập mùa đông - giảm giá 50%</h3>
+    </div>
+    <div class="banner-box banner-box2">
+        <h2>BỘ SƯU TẬP THỜI TRANG MỚI</h2>
+        <h3>Đông / Xuân 2023</h3>
+    </div>
+    <div class="banner-box banner-box3">
+        <h2>T-SHIRTS</h2>
+        <h3>Thời trang xu hướng mới nhất</h3>
+    </div>
+</section>
